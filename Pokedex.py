@@ -1,8 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter.messagebox import showerror, showinfo
+from tkinter.messagebox import *
 from PIL import Image, ImageTk
-import sqlite3
 
 fenetre = tk.Tk()
 fenetre.title("Pokédex")
@@ -22,6 +21,27 @@ def montrer_pokemon_info(pokemon_info):
     type_label.config(text="Type : " + pokemon_info["type"])
     description_label.config(text="Description : " + pokemon_info["description"])
     capacite_label.config(text="Capacité : " + pokemon_info["capacite"])
+    
+    # Charger l'image du Pokémon
+    img_path = f"{pokemon_info['nom']}.png" 
+    try:
+        img = Image.open(img_path)
+        img = img.resize((150, 150))  
+        img = ImageTk.PhotoImage(img)
+        image_label.config(image=img)
+        image_label.image = img  
+    except FileNotFoundError:
+        
+        image_label.config(image="")
+        image_label.image = None
+
+
+
+
+
+
+
+
 
 #Fonction pour selectionner un pokémon et le récupérer (curselection)
 
@@ -71,9 +91,9 @@ def supprimer_pokemon():
         pokemon_liste.delete(index)
         showinfo(title="INFO", message="Pokémon supprimé avec succès")
     
-Bulbizarre_img = ImageTk.PhotoImage(Image.open("0001Bulbasaur.png"))
-Salamèche_img = ImageTk.PhotoImage(Image.open("0004Charmander.png"))
-Carapuce_img = ImageTk.PhotoImage(Image.open("0007Squirtle.png"))
+# Bulbizarre_img = ImageTk.PhotoImage(Image.open("0001Bulbasaur.png"))
+# Salamèche_img = ImageTk.PhotoImage(Image.open("0004Charmander.png"))
+# Carapuce_img = ImageTk.PhotoImage(Image.open("0007Squirtle.png"))
 
 
 pokemon_liste = tk.Listbox(fenetre, selectmode=tk.SINGLE)
@@ -92,7 +112,7 @@ pokemon_liste.insert(tk.END,)
 # Informations des pokemons 
 
 
-info_frame = ttk.Frame(fenetre, )
+info_frame = ttk.Frame(fenetre)
 info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
 nom_label = ttk.Label(info_frame, text="", foreground="blue" )
