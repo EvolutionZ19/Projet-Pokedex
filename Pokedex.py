@@ -36,7 +36,7 @@ fenetre = tk.Tk()
 fenetre.title("Pokédex")
 fenetre.geometry("1024x768")
 fenetre.iconbitmap("img/Pokedex.ico")
-
+fenetre.configure(bg='light blue')  # Change the background color to light blue
 
 # Fonction pour montrer les informations du pokémon
 def montrer_pokemon_info(pokemon_info):
@@ -51,7 +51,7 @@ def montrer_pokemon_info(pokemon_info):
         img = Image.open(img_chemin)
         img = img.resize((200, 200))  
         img = ImageTk.PhotoImage(img)
-        image_label.config(image=img)
+        image_label.config(image=img, background="light blue")
         image_label.image = img  
     except FileNotFoundError:
         image_label.config(image="")
@@ -99,23 +99,19 @@ def supprimer_pokemon():
         sauvegarder_donnees()
     
 
-pokemon_liste = tk.Listbox(fenetre, selectmode=tk.SINGLE)
+pokemon_liste = tk.Listbox(fenetre, selectmode=tk.SINGLE, selectbackground='white', selectforeground='black', exportselection=0, width=50)
 for pokemon_id, data in pokedex_info.items():
     pokemon_liste.insert(tk.END, f"{pokemon_id}. {data['nom']}")
-pokemon_liste.pack()
+pokemon_liste.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=10)  # Move the listbox to the left side and expand it vertically
     
     
     
-
-pokemon_liste.pack()
-pokemon_liste.insert(tk.END,)
-
 
 image_logo = Image.open("img/logo.png")
 image_logo = image_logo.resize((300, 150))
 image_logo_label = ImageTk.PhotoImage(image_logo)
-label = ttk.Label(fenetre, image=image_logo_label)
-label.pack(anchor=tk.NW)
+label = ttk.Label(fenetre, image=image_logo_label, background="light blue")
+label.pack(anchor=tk.NW, padx=10, pady=10,)
 
 
 
@@ -123,7 +119,7 @@ label.pack(anchor=tk.NW)
 
 
 info_frame = ttk.Frame(fenetre)
-info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=10, pady=10)
+info_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=10, pady=10)  # Move the info frame to the right side and expand it
 
 nom_label = ttk.Label(info_frame, text="", foreground="blue",  )
 nom_label.pack()
@@ -138,16 +134,16 @@ capacite_label = ttk.Label(info_frame, text="", foreground="blue")
 capacite_label.pack()
 
 image_label = tk.Label(fenetre, image="")
-image_label.pack()
+image_label.pack(padx=10, pady=10)
 
 bouton_info_pokemon = tk.Button(fenetre, text="Afficher les Informations", command=pokemon_selectionner,
 border="8", relief="raised", )
-bouton_info_pokemon.pack()
+bouton_info_pokemon.pack(side=tk.BOTTOM, padx=10, pady=10)  # Move the button to the bottom
 
 # Nouvelle entrée des pokemons
 
 frame_nouveau_pokemon = ttk.Frame(fenetre)
-frame_nouveau_pokemon.pack(side=tk.LEFT, padx=10, pady=10)
+frame_nouveau_pokemon.pack(side=tk.TOP, padx=10, pady=10)  # Move the new pokemon frame to the top
 
 nouveau_Nom = ttk.Label(frame_nouveau_pokemon, text="Nom :")
 nouveau_Nom.grid(row=0, column=0, padx=5, pady=5)
@@ -169,16 +165,18 @@ nouvelle_capacite.grid(row=3, column=0, padx=5, pady=5)
 nouvelle_capacite_entree = ttk.Entry(frame_nouveau_pokemon)
 nouvelle_capacite_entree.grid(row=3, column=1, padx=5, pady=5)
 
-bouton_nouveau_pokemon = tk.Button(fenetre, text="Ajouter", command= ajouter_nouveau_pokemon, border="8", relief="raised")
-bouton_nouveau_pokemon.pack(side=tk.LEFT, padx=10, pady=10)
+bouton_supprimer_pokemon = tk.Button(fenetre, text="Supprimer un Pokemon", command= supprimer_pokemon, border="8", relief="raised", )
+bouton_supprimer_pokemon.pack(side=tk.BOTTOM, padx=10, pady=10)  # Move the button to the bottom
 
-bouton_supprimer_pokemon = tk.Button(fenetre, text="Supprimer", command= supprimer_pokemon, border="8", relief="raised", )
-bouton_supprimer_pokemon.pack(side=tk.LEFT, padx=10, pady=10)
+bouton_nouveau_pokemon = tk.Button(fenetre, text="Ajouter un Pokemon", command= ajouter_nouveau_pokemon, border="8", relief="raised")
+bouton_nouveau_pokemon.pack(side=tk.BOTTOM, padx=10, pady=10)  # Move the button to the bottom
 
 
 
 
 fenetre.mainloop()
+
+
 
 
 
