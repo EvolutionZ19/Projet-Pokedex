@@ -23,9 +23,9 @@ def montrer_pokemon_info(pokemon_info):
     capacite_label.config(text="Capacité : " + pokemon_info["capacite"])
     
     # Charger l'image du Pokémon
-    img_path = f"{pokemon_info['nom']}.png" 
+    img_chemin = f"{pokemon_info['nom']}.png" 
     try:
-        img = Image.open(img_path)
+        img = Image.open(img_chemin)
         img = img.resize((150, 150))  
         img = ImageTk.PhotoImage(img)
         image_label.config(image=img)
@@ -91,10 +91,6 @@ def supprimer_pokemon():
         pokemon_liste.delete(index)
         showinfo(title="INFO", message="Pokémon supprimé avec succès")
     
-# Bulbizarre_img = ImageTk.PhotoImage(Image.open("0001Bulbasaur.png"))
-# Salamèche_img = ImageTk.PhotoImage(Image.open("0004Charmander.png"))
-# Carapuce_img = ImageTk.PhotoImage(Image.open("0007Squirtle.png"))
-
 
 pokemon_liste = tk.Listbox(fenetre, selectmode=tk.SINGLE)
 for pokemon_id, data in pokedex_info.items():
