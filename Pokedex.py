@@ -8,6 +8,8 @@ import os
 # Définir pokedex_info avant de charger les données
 pokedex_info = {}
 
+
+
 # Fonction pour sauvegarder les données
 def sauvegarder_donnees():
     try:
@@ -88,7 +90,29 @@ def ajouter_nouveau_pokemon():
         nouvelle_capacite_entree.delete(0, tk.END)
         showinfo(title="OK", message="Pokémon ajouté avec succès")
 
+# Fonction pour modifier les informations d'un pokémon
+def modifier_pokemon():
+    selection_index = pokemon_liste.curselection()
+    if selection_index:
+        index = int(selection_index[0])
+        pokemon_id = list(pokedex_info.keys())[index]
+        nom = nouveau_Nom_entree.get()
+        type_pokemon = nouveau_type_entree.get()
+        description = nouvelle_description_entree.get()
+        capacite = nouvelle_capacite_entree.get()
 
+        if nom == "" or type_pokemon == "" or description == "" or capacite == "":
+            showerror(title="ERREUR", message="Des cases sont vides")
+        else:
+            pokedex_info[pokemon_id] = {"nom": nom, "type": type_pokemon, "description": description, "capacite": capacite}
+            sauvegarder_donnees()  # Sauvegarder les données dans le fichier pokedex_data.pkl
+            pokemon_liste.delete(index)
+            pokemon_liste.insert(index, f"{pokemon_id}. {nom}")
+            nouveau_Nom_entree.delete(0, tk.END)
+            nouveau_type_entree.delete(0, tk.END)
+            nouvelle_description_entree.delete(0, tk.END)
+            nouvelle_capacite_entree.delete(0, tk.END)
+            showinfo(title="OK", message="Pokémon modifié avec succès")
         
 # Fonction pour supprimer un pokémon
 def supprimer_pokemon():
@@ -174,10 +198,14 @@ bouton_supprimer_pokemon.pack(side=tk.BOTTOM, padx=10, pady=10)
 bouton_nouveau_pokemon = tk.Button(fenetre, text="Ajouter un Pokemon", command= ajouter_nouveau_pokemon, border="8", relief="raised")
 bouton_nouveau_pokemon.pack(side=tk.BOTTOM, padx=10, pady=10)  
 
+bouton_modifier_pokemon = tk.Button(fenetre, text="Modifier un Pokemon", command= modifier_pokemon, border="8", relief="raised")
+bouton_modifier_pokemon.pack(side=tk.BOTTOM, padx=10, pady=10)  
+
 
 
 
 fenetre.mainloop()
+
 
 
 
